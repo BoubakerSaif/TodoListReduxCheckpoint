@@ -6,6 +6,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useState } from "react";
+import UpdateTodo from "./UpdateTodo";
 
 const Todo = ({ todoEl }) => {
   const dispatch = useDispatch();
@@ -14,30 +15,34 @@ const Todo = ({ todoEl }) => {
     dispatch(finishTodo(todoEl.id));
   };
   const [show, setShow] = useState(false);
+
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
       {show ? (
-        <input defaultValue={todoEl.task} />
+        <UpdateTodo todoEl={todoEl} setShow={setShow} show={show} />
       ) : (
         <p style={todoEl.isDone ? { color: "green" } : { color: "red" }}>
           {todoEl.task}
         </p>
       )}
-
-      {todoEl.isDone ? (
+      {!show && todoEl.isDone === true && (
         <MdOutlineCancel
           style={{ cursor: "pointer" }}
           onClick={completeHandler}
         />
-      ) : (
+      )}
+      {!show && todoEl.isDone === false && (
         <MdDone style={{ cursor: "pointer" }} onClick={completeHandler} />
       )}
-      <CiEdit
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          setShow(!show);
-        }}
-      />
+      {!show && (
+        <CiEdit
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            setShow(!show);
+          }}
+        />
+      )}
+
       {!show && (
         <MdDelete
           style={{ cursor: "pointer" }}

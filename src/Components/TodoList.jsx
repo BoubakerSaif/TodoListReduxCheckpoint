@@ -1,4 +1,4 @@
-import Todo from "./Todo";
+import Todo from "./todo";
 
 const todoList = ({ todos }) => {
   return (
